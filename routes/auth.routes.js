@@ -1,19 +1,32 @@
-const express=require("express")
-const router=express.Router()
+const express = require("express");
+const passport=require("passport")
+const router = express.Router();
+const {authCheck}=require("../middlewares/auth.middlewares")
 
-router.get("/login",(req,res)=>
-{
-   res.render("login")
-})
+const {
+  loggingWithGoogle,
+} = require("../controller/authentication.controller");
 
-router.get("/logout",(req,res)=>
-{
-    res.send("logging out")
-})
+const {
+  loginPageRendering,
+  logoutPageRendering,
+  redirectFunctionality,
+  failureRedirect,
+  successRedirect,
 
-router.get("/google",(req,res)=>
-{
-    res.send("logging with google")
-})
+} = require("../controller/staticPageRendering");
 
-module.exports=router
+
+router.get("/login", loginPageRendering);
+
+router.get("/logout", logoutPageRendering);
+
+router.get("/google", loggingWithGoogle);
+
+router.get("/google/redirect",redirectFunctionality );
+
+router.get("/failure",failureRedirect)
+
+router.get("/protected",authCheck,successRedirect)
+
+module.exports = router;

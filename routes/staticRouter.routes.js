@@ -4,5 +4,4 @@ const { homePageRendering } = require("../controller/staticPageRendering");
 
 router.get("/", homePageRendering);
 
-
-module.exports=router
+module.exports = router;
